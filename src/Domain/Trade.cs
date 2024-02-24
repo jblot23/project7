@@ -4,7 +4,7 @@ namespace Dot.Net.WebApi.Domain
 {
     public class Trade
     {
-        public int TradeId { get; set; }
+        public int TradeId { get; set; }  
         public string Account { get; set; }
         public double BuyQuantity { get; set; }
         public double SellQuantity   { get; set; }

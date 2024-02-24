@@ -30,15 +30,27 @@ namespace Dot.Net.WebApi.Repositories
             return trade;
         }
 
-        public Trade UpdateTrade(Trade input) 
+        public Trade UpdateTrade(int tradeId, Trade input) 
         {
-            var trade = _context.Trades.FirstOrDefault(x => x.TradeId == input.TradeId);
+            var trade = _context.Trades.FirstOrDefault(x => x.TradeId == tradeId);
             if (trade != null) 
             {
-                _context.Trades.Update(trade);
-                _context.SaveChanges(true);
+                trade.Security = input.Security;
+                _context.SaveChanges();
             }
             return trade;
+        }
+
+        public bool DeleteTrade(int id) 
+        {
+            var trade = _context.Trades.FirstOrDefault(x => x.TradeId == id);
+            if (trade != null)
+            { 
+                _context.Trades.Remove(trade);
+                _context.SaveChanges(true);
+                return true;
+            }
+            return false;
         }
     }
 }

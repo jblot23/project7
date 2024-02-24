@@ -6,53 +6,77 @@ using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApi.Domain;
+using WebApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
 {
     [Route("[controller]")]
     public class RuleNameController : Controller
     {
-        // TODO: Inject RuleName service
+        private readonly IRuleNameRepository _ruleNameRepository;
+
+        public RuleNameController(IRuleNameRepository ruleNameRepository)
+        {
+            _ruleNameRepository = ruleNameRepository;
+        }
 
         [HttpGet("/ruleName/list")]
-        public IActionResult Home()
+        public async Task<IActionResult> Home()
         {
-            // TODO: find all RuleName, add to model
-            return View("ruleName/list");
+            var ruleNames = await _ruleNameRepository.GetAll();
+            return Ok(ruleNames);
         }
 
         [HttpGet("/ruleName/add")]
-        public IActionResult AddRuleName([FromBody]RuleName trade)
+        public IActionResult AddRuleName()
         {
-            return View("ruleName/add");
+            return Ok();
         }
 
-        [HttpGet("/ruleName/add")]
-        public IActionResult Validate([FromBody]RuleName trade)
+        [HttpPost("/ruleName/add")]
+        public async Task<IActionResult> Validate([FromBody] RuleName ruleName)
         {
-            // TODO: check data valid and save to db, after saving return RuleName list
-            return View("ruleName/add");
+            if (ModelState.IsValid)
+            {
+                await _ruleNameRepository.Add(ruleName);
+                return Ok();
+            }
+            return Ok();
         }
 
         [HttpGet("/ruleName/update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        public async Task<IActionResult> ShowUpdateForm(int id)
         {
-            // TODO: get RuleName by Id and to model then show to the form
-            return View("ruleName/update");
+            var ruleName = await _ruleNameRepository.GetById(id);
+            if (ruleName == null)
+            {
+                return NotFound();
+            }
+            return Ok(ruleName);
         }
 
         [HttpPost("/ruleName/update/{id}")]
-        public IActionResult updateRuleName(int id, [FromBody] RuleName rating)
+        public async Task<IActionResult> UpdateRuleName(int id, [FromBody] RuleName ruleName)
         {
-            // TODO: check required fields, if valid call service to update RuleName and return RuleName list
-            return Redirect("/ruleName/list");
+            if (id != ruleName.Id)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _ruleNameRepository.Update(ruleName);
+                return Ok();
+            }
+            return Ok();
         }
 
         [HttpDelete("/ruleName/{id}")]
-        public IActionResult DeleteRuleName(int id)
+        public async Task<IActionResult> DeleteRuleName(int id)
         {
-            // TODO: Find RuleName by Id and delete the RuleName, return to Rule list
-            return Redirect("/ruleName/list");
+            await _ruleNameRepository.Delete(id);
+            return Ok();
         }
     }
+
 }

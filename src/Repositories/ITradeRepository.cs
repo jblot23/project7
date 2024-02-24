@@ -6,8 +6,9 @@ namespace Dot.Net.WebApi.Repositories
     public interface ITradeRepository
     {
         Trade AddTrade(Trade trade);
+        bool DeleteTrade(int id);
         Trade FindTrade(int id);
         List<Trade> GetAllTrades();
-        Trade UpdateTrade(Trade input);
+        Trade UpdateTrade(int tradeId, Trade input);
     }
 }

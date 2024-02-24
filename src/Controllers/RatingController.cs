@@ -6,53 +6,63 @@ using Dot.Net.WebApi.Controllers.Domain;
 using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
- 
+using WebApi.Repositories;
+
 namespace Dot.Net.WebApi.Controllers
 {
     [Route("[controller]")]
     public class RatingController : Controller
     {
-        // TODO: Inject Rating service
+        private readonly IRatingRepository _ratingRepository;
+
+        public RatingController(IRatingRepository ratingRepository)
+        {
+            _ratingRepository = ratingRepository;
+        }
 
         [HttpGet("/rating/list")]
         public IActionResult Home()
         {
-            // TODO: find all Rating, add to model
-            return View("rating/list");
+            var ratings = _ratingRepository.GetAll();
+            return Ok(ratings);
         }
 
-        [HttpGet("/rating/add")]
-        public IActionResult AddRatingForm([FromBody]Rating rating)
+        [HttpPost("/rating/add")]
+        public IActionResult AddRating([FromBody] Rating rating)
         {
-            return View("rating/add");
-        }
-
-        [HttpGet("/rating/add")]
-        public IActionResult Validate([FromBody]Rating rating)
-        {
-            // TODO: check data valid and save to db, after saving return Rating list
-            return View("rating/add");
-        }
-
-        [HttpGet("/rating/update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
-        {
-            // TODO: get Rating by Id and to model then show to the form
-            return View("rating/update");
+            _ratingRepository.Add(rating);
+            return Ok("Rating added successfully");
         }
 
         [HttpPost("/rating/update/{id}")]
-        public IActionResult updateRating(int id, [FromBody] Rating rating)
+        public IActionResult UpdateRating(int id, [FromBody] Rating rating)
         {
-            // TODO: check required fields, if valid call service to update Rating and return Rating list
-            return Redirect("/rating/list");
+            var existingRating = _ratingRepository.GetById(id);
+            if (existingRating == null)
+            {
+                return NotFound();
+            }
+
+            existingRating.MoodysRating = rating.MoodysRating;
+            existingRating.SandPRating = rating.SandPRating;
+            existingRating.FitchRating = rating.FitchRating;
+            existingRating.OrderNumber = rating.OrderNumber;
+
+            _ratingRepository.Update(existingRating);
+            return Ok("Rating updated successfully");
         }
 
         [HttpDelete("/rating/{id}")]
         public IActionResult DeleteRating(int id)
         {
-            // TODO: Find Rating by Id and delete the Rating, return to Rating list
-            return Redirect("/rating/list");
+            var existingRating = _ratingRepository.GetById(id);
+            if (existingRating == null)
+            {
+                return NotFound();
+            }
+
+            _ratingRepository.Delete(id);
+            return Ok("Rating deleted successfully");
         }
     }
 }

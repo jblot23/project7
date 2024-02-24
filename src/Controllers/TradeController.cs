@@ -6,7 +6,8 @@ using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
- 
+using WebApi.Dto;
+
 namespace Dot.Net.WebApi.Controllers
 {
     [Route("[controller]")]
@@ -34,7 +35,7 @@ namespace Dot.Net.WebApi.Controllers
             return Json(result);
         }
 
-        [HttpGet("/trade/add")]
+        [HttpPost("/trade/add")]
         public IActionResult AddTrade([FromBody]Trade trade)
         {
             var result = _tradeRepository.AddTrade(trade);
@@ -42,10 +43,19 @@ namespace Dot.Net.WebApi.Controllers
             
         }
 
-        [HttpGet("/trade/add")]
+        [HttpPost("/trade/validateAdd")]
         public IActionResult Validate([FromBody]Trade trade)
         {
-            // TODO: check data valid and save to db, after saving return Trade list
+            if(trade.Status != "Open")
+            {
+                return BadRequest("You have enterted invliad data");
+            }
+
+            if(trade.Benchmark != "SM") 
+            {
+                return BadRequest("You have the wrong benchmark");
+            }
+
             return View("trade/add");
         }
 
@@ -56,18 +66,24 @@ namespace Dot.Net.WebApi.Controllers
             return View("trade/update");
         }
 
-        [HttpPost("/trade/update/{id}")]
+        [HttpPost("/trade/update")]
         public IActionResult updateTrade(int id, [FromBody] Trade trade)
         {
-            // TODO: check required fields, if valid call service to update Trade and return Trade list
-            return Redirect("/trade/list");
+            var response =  _tradeRepository.UpdateTrade(id, trade);
+            return Ok(response);
         }
 
         [HttpDelete("/trade/{id}")]
         public IActionResult DeleteTrade(int id)
         {
-            // TODO: Find Trade by Id and delete the Trade, return to Trade list
-            return Redirect("/trade/list");
+            var response = _tradeRepository.DeleteTrade(id);
+            return Ok(response);
+        }
+
+        [HttpPost("/trade/assign")]
+        public IActionResult AssignEamil([FromBody] TradeDto input)
+        {
+            return Ok(input);   
         }
     }
 }

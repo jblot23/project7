@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dot.Net.WebApi.Data;
+using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using WebApi.Repositories;
 
 namespace Dot.Net.WebApi
 {
@@ -36,6 +38,9 @@ namespace Dot.Net.WebApi
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITradeRepository, TradeRepository>();
+            services.AddScoped<ICurvePointRepository, CurvePointRepository>();
+            services.AddScoped<IRuleNameRepository, RuleNameRepository>();
+            services.AddScoped<IRatingRepository, RatingRepository>();
 
             services.AddSwaggerGen();
             services.AddSwaggerGen(c =>

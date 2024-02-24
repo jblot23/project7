@@ -1,57 +1,64 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
- 
+
 namespace Dot.Net.WebApi.Controllers
 {
-    [Route("[controller]")]
-    public class CurveController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CurveController : ControllerBase
     {
-        // TODO: Inject Curve Point service
+        private readonly ICurvePointRepository _curvePointRepository;
 
-        [HttpGet("/curvePoint/list")]
-        public IActionResult Home()
+        public CurveController(ICurvePointRepository curvePointRepository)
         {
-            return View("curvePoint/list");
+            _curvePointRepository = curvePointRepository;
         }
 
-        [HttpGet("/curvePoint/add")]
-        public IActionResult AddCurvePoint([FromBody]CurvePoint curvePoint)
+        [HttpGet]
+        public async Task<ActionResult<List<CurvePoint>>> GetAllCurvePoints()
         {
-            return View("curvePoint/add");
+            var curvePoints = await _curvePointRepository.GetAllAsync();
+            return Ok(curvePoints);
         }
 
-        [HttpGet("/curvePoint/add")]
-        public IActionResult Validate([FromBody]CurvePoint curvePoint)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CurvePoint>> GetCurvePointById(int id)
         {
-            // TODO: check data valid and save to db, after saving return bid list
-            return View("curvePoint/add"    );
+            var curvePoint = await _curvePointRepository.GetByIdAsync(id);
+            if (curvePoint == null)
+            {
+                return NotFound();
+            }
+            return Ok(curvePoint);
         }
 
-        [HttpGet("/curvePoint/update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        [HttpPost]
+        public async Task<ActionResult> AddCurvePoint(CurvePoint curvePoint)
         {
-            // TODO: get CurvePoint by Id and to model then show to the form
-            return View("curvepoint/update");
+            await _curvePointRepository.AddAsync(curvePoint);
+            return CreatedAtAction(nameof(GetCurvePointById), new { id = curvePoint.Id }, curvePoint);
         }
 
-        [HttpPost("/curvepoint/update/{id}")]
-        public IActionResult UpdateCurvePoint(int id, [FromBody] CurvePoint curvePoint)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateCurvePoint(int id, CurvePoint curvePoint)
         {
-            // TODO: check required fields, if valid call service to update Curve and return Curve list
-            return Redirect("/curvepoint/list");
+            if (id != curvePoint.Id)
+            {
+                return BadRequest();
+            }
+
+            await _curvePointRepository.UpdateAsync(curvePoint);
+            return NoContent();
         }
 
-        [HttpDelete("/curvepoint/{id}")]
-        public IActionResult DeleteBid(int id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteCurvePoint(int id)
         {
-            // TODO: Find Curve by Id and delete the Curve, return to Curve list
-
-            return Redirect("/curvePoint/list");
+            await _curvePointRepository.DeleteAsync(id);
+            return NoContent();
         }
     }
 }
