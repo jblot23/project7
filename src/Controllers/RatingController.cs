@@ -6,6 +6,7 @@ using Dot.Net.WebApi.Controllers.Domain;
 using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WebApi.Dto.Rating;
 using WebApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
@@ -28,9 +29,17 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpPost("/rating/add")]
-        public IActionResult AddRating([FromBody] Rating rating)
+        public IActionResult AddRating([FromBody] RatingDto rating)
         {
-            _ratingRepository.Add(rating);
+            var records = new Rating()
+            {
+                FitchRating = rating.FitchRating,
+                MoodysRating = rating.MoodysRating, 
+                OrderNumber = rating.OrderNumber,
+                SandPRating = rating.SandPRating
+            };
+
+            _ratingRepository.Add(records);
             return Ok("Rating added successfully");
         }
 

@@ -7,6 +7,7 @@ using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApi.Dto;
+using WebApi.Dto.Trade;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -29,9 +30,9 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpGet("/trade/GetTrade")]
-        public IActionResult FindTrades(int TradeId)
+        public IActionResult FindTrades([FromBody] FindTradeDto input)
         {
-            var result = _tradeRepository.FindTrade(TradeId);
+            var result = _tradeRepository.FindTrade(input.Id);
             return Json(result);
         }
 
@@ -83,6 +84,7 @@ namespace Dot.Net.WebApi.Controllers
         [HttpPost("/trade/assign")]
         public IActionResult AssignEamil([FromBody] TradeDto input)
         {
+
             return Ok(input);   
         }
     }

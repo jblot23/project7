@@ -13,6 +13,7 @@ namespace WebApi.Migrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
+
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
@@ -20,188 +21,188 @@ namespace WebApi.Migrations
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Dot.Net.WebApi.Controllers.Domain.Rating", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("FitchRating");
+                b.Property<string>("FitchRating");
 
-                    b.Property<string>("MoodysRating");
+                b.Property<string>("MoodysRating");
 
-                    b.Property<int>("OrderNumber");
+                b.Property<int>("OrderNumber");
 
-                    b.Property<string>("SandPRating");
+                b.Property<string>("SandPRating");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Rating");
-                });
+                b.ToTable("Rating");
+            });
 
             modelBuilder.Entity("Dot.Net.WebApi.Domain.BidList", b =>
-                {
-                    b.Property<int>("BidListId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("BidListId")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Account");
+                b.Property<string>("Account");
 
-                    b.Property<double>("Ask");
+                b.Property<double>("Ask");
 
-                    b.Property<double>("AskQuantity");
+                b.Property<double>("AskQuantity");
 
-                    b.Property<string>("Benchmark");
+                b.Property<string>("Benchmark");
 
-                    b.Property<double>("Bid");
+                b.Property<double>("Bid");
 
-                    b.Property<DateTime>("BidListDate");
+                b.Property<DateTime>("BidListDate");
 
-                    b.Property<double>("BidQuantity");
+                b.Property<double>("BidQuantity");
 
-                    b.Property<string>("Book");
+                b.Property<string>("Book");
 
-                    b.Property<string>("Commentary");
+                b.Property<string>("Commentary");
 
-                    b.Property<DateTime>("CreationDate");
+                b.Property<DateTime>("CreationDate");
 
-                    b.Property<string>("CreationName");
+                b.Property<string>("CreationName");
 
-                    b.Property<string>("DealName");
+                b.Property<string>("DealName");
 
-                    b.Property<string>("DealType");
+                b.Property<string>("DealType");
 
-                    b.Property<DateTime>("RevisionDate");
+                b.Property<DateTime>("RevisionDate");
 
-                    b.Property<string>("RevisionName");
+                b.Property<string>("RevisionName");
 
-                    b.Property<string>("Security");
+                b.Property<string>("Security");
 
-                    b.Property<string>("Side");
+                b.Property<string>("Side");
 
-                    b.Property<string>("SourceListId");
+                b.Property<string>("SourceListId");
 
-                    b.Property<string>("Status");
+                b.Property<string>("Status");
 
-                    b.Property<string>("Trader");
+                b.Property<string>("Trader");
 
-                    b.Property<string>("Type");
+                b.Property<string>("Type");
 
-                    b.HasKey("BidListId");
+                b.HasKey("BidListId");
 
-                    b.ToTable("Bids");
-                });
+                b.ToTable("Bids");
+            });
 
             modelBuilder.Entity("Dot.Net.WebApi.Domain.CurvePoint", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("AsOfDate");
+                b.Property<DateTime>("AsOfDate");
 
-                    b.Property<DateTime>("CreationDate");
+                b.Property<DateTime>("CreationDate");
 
-                    b.Property<int>("CurveId");
+                b.Property<int>("CurveId");
 
-                    b.Property<double>("Term");
+                b.Property<double>("Term");
 
-                    b.Property<double>("Value");
+                b.Property<double>("Value");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("CurvePoints");
-                });
+                b.ToTable("CurvePoints");
+            });
 
             modelBuilder.Entity("Dot.Net.WebApi.Domain.Trade", b =>
-                {
-                    b.Property<int>("TradeId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("TradeId")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Account");
+                b.Property<string>("Account");
 
-                    b.Property<string>("Benchmark");
+                b.Property<string>("Benchmark");
 
-                    b.Property<string>("Book");
+                b.Property<string>("Book");
 
-                    b.Property<double>("BuyPrice");
+                b.Property<double>("BuyPrice");
 
-                    b.Property<double>("BuyQuantity");
+                b.Property<double>("BuyQuantity");
 
-                    b.Property<DateTime>("CreationDate");
+                b.Property<DateTime>("CreationDate");
 
-                    b.Property<string>("CreationName");
+                b.Property<string>("CreationName");
 
-                    b.Property<string>("DealName");
+                b.Property<string>("DealName");
 
-                    b.Property<string>("DealType");
+                b.Property<string>("DealType");
 
-                    b.Property<DateTime>("RevisionDate");
+                b.Property<DateTime>("RevisionDate");
 
-                    b.Property<string>("RevisionName");
+                b.Property<string>("RevisionName");
 
-                    b.Property<string>("Security");
+                b.Property<string>("Security");
 
-                    b.Property<double>("SellPrice");
+                b.Property<double>("SellPrice");
 
-                    b.Property<double>("SellQuantity");
+                b.Property<double>("SellQuantity");
 
-                    b.Property<string>("Side");
+                b.Property<string>("Side");
 
-                    b.Property<string>("SourceListId");
+                b.Property<string>("SourceListId");
 
-                    b.Property<string>("Status");
+                b.Property<string>("Status");
 
-                    b.Property<DateTime>("TradeDate");
+                b.Property<DateTime>("TradeDate");
 
-                    b.Property<string>("Trader");
+                b.Property<string>("Trader");
 
-                    b.HasKey("TradeId");
+                b.HasKey("TradeId");
 
-                    b.ToTable("Trades");
-                });
+                b.ToTable("Trades");
+            });
 
             modelBuilder.Entity("Dot.Net.WebApi.Domain.User", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("UserId")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Fullname");
+                b.Property<string>("Fullname");
 
-                    b.Property<string>("Password");
+                b.Property<string>("Password");
 
-                    b.Property<string>("Role");
+                b.Property<string>("Role");
 
-                    b.Property<string>("UserName");
+                b.Property<string>("UserName");
 
-                    b.HasKey("UserId");
+                b.HasKey("UserId");
 
-                    b.ToTable("Users");
-                });
+                b.ToTable("Users");
+            });
 
             modelBuilder.Entity("WebApi.Domain.RuleName", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                b.Property<string>("Description");
 
-                    b.Property<string>("Json");
+                b.Property<string>("Json");
 
-                    b.Property<string>("Name");
+                b.Property<string>("Name");
 
-                    b.Property<string>("SqlPart");
+                b.Property<string>("SqlPart");
 
-                    b.Property<string>("SqlStr");
+                b.Property<string>("SqlStr");
 
-                    b.Property<string>("Template");
+                b.Property<string>("Template");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.ToTable("Rules");
-                });
+                b.ToTable("Rules");
+            });
 #pragma warning restore 612, 618
         }
     }

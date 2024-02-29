@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Dto.CurvePoint;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -55,9 +56,9 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteCurvePoint(int id)
+        public async Task<ActionResult> DeleteCurvePoint([FromBody] DeleteCurvePoint input)
         {
-            await _curvePointRepository.DeleteAsync(id);
+            await _curvePointRepository.DeleteAsync(input.Id);
             return NoContent();
         }
     }

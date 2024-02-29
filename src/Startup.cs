@@ -41,6 +41,7 @@ namespace Dot.Net.WebApi
             services.AddScoped<ICurvePointRepository, CurvePointRepository>();
             services.AddScoped<IRuleNameRepository, RuleNameRepository>();
             services.AddScoped<IRatingRepository, RatingRepository>();
+            services.AddScoped<IBidListRepository, BidListRepository>();
 
             services.AddSwaggerGen();
             services.AddSwaggerGen(c =>

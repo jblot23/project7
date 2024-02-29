@@ -6,6 +6,7 @@ using Dot.Net.WebApi.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApi.Domain;
+using WebApi.Dto.RuleName;
 using WebApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
@@ -45,9 +46,9 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpGet("/ruleName/update/{id}")]
-        public async Task<IActionResult> ShowUpdateForm(int id)
+        public async Task<IActionResult> ShowUpdateForm([FromBody] ShowUpdateFormDto input) 
         {
-            var ruleName = await _ruleNameRepository.GetById(id);
+            var ruleName = await _ruleNameRepository.GetById(input.Id);
             if (ruleName == null)
             {
                 return NotFound();
